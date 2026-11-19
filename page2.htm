@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- صفحه دوم: دکمه‌های تعاملی نمره (تعقیب ماوس و فرار) -->
+<html dir="rtl" lang="fa">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه دوم - ارزیابی نمره</title>
+    <!-- بارگذاری فونت وزیرمتن -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+
+    <script type="text/javascript">
+        // متغیرهای ذخیره مختصات ماوس و شمارنده رنگ
+        var mx = 0;
+        var my = 0;
+        var r = 0;
+        var moving = 0;
+
+        // ذخیره موقعیت ماوس و فعال‌سازی حرکت دکمه اول در کامپیوتر
+        function mouseMove(e) {
+            mx = e.clientX;
+            my = e.clientY;
+            if (moving == 0) {
+                moving = 1;
+                var b1 = document.getElementById("b1");
+                b1.style.position = "absolute";
+                b1.style.left = b1.offsetLeft + "px";
+                b1.style.top = b1.offsetTop + "px";
+                bia();
+            }
+        }
+
+        // تابع بازگشتی حرکت آرام دکمه سبز به سمت ماوس
+        function bia() {
+            var b1 = document.getElementById("b1");
+            var x = parseInt(b1.style.left);
+            var y = parseInt(b1.style.top);
+
+            if (x < mx - 70) { x = x + 5; }
+            if (x > mx - 70) { x = x - 5; }
+            if (y < my - 20) { y = y + 5; }
+            if (y > my - 20) { y = y - 5; }
+
+            b1.style.left = x + "px";
+            b1.style.top = y + "px";
+
+            setTimeout("bia()", 30);
+        }
+
+        // تابع فرار تصادفی دکمه قرمز، تغییر متن و چرخش رنگ‌ها
+        function farar() {
+            var b2 = document.getElementById("b2");
+            var matn = document.getElementById("matn");
+
+            // جابه‌جایی تصادفی داخل محدوده صفحه (سازگار با کامپیوتر و گوشی)
+            var maxX = window.innerWidth - 170;
+            var maxY = window.innerHeight - 70;
+            if (maxX < 10) { maxX = 10; }
+            if (maxY < 80) { maxY = 80; }
+
+            var rx = Math.round(Math.random() * maxX);
+            var ry = 80 + Math.round(Math.random() * (maxY - 80));
+
+            b2.style.position = "absolute";
+            b2.style.left = rx + "px";
+            b2.style.top = ry + "px";
+
+            // تغییر متن طبق سناریوی خواسته شده
+            matn.innerText = "استاد ترو خدا نکن نمره بده";
+
+            // تغییر رنگ متن با شرط‌های ساده if
+            r = r + 1;
+            if (r == 1) { matn.style.color = "red"; }
+            if (r == 2) { matn.style.color = "blue"; }
+            if (r == 3) { matn.style.color = "purple"; }
+            if (r == 4) { matn.style.color = "orange"; }
+            if (r == 5) { matn.style.color = "green"; }
+            if (r == 6) { matn.style.color = "brown"; r = 0; }
+        }
+    </script>
+</head>
+<body bgcolor="#FFFFFF" onmousemove="mouseMove(event)" style="font-family: 'Vazirmatn', Tahoma, sans-serif; margin: 0; padding: 20px;">
+
+    <center>
+        <!-- متن وضعیت نمره بالای صفحه -->
+        <p id="matn" style="font-size: 20px; font-weight: bold; color: #222222; margin-top: 20px; margin-bottom: 30px;">
+            استاد در همین حد بلد بودم الان نمره کامل رو بهم میدید؟
+        </p>
+
+        <!-- دکمه اول (سبز) و دکمه دوم (قرمز فراری) -->
+        <input type="button" id="b1" name="b1" value="اره نمرت 20 هست" onclick="window.location='page3.htm'" style="font-family: 'Vazirmatn', Tahoma; font-size: 15px; background-color: green; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer;">
+        &nbsp;&nbsp;
+        <input type="button" id="b2" name="b2" value="نه خیلی ساده بود" onmouseover="farar()" onclick="farar()" style="font-family: 'Vazirmatn', Tahoma; font-size: 15px; background-color: red; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer;">
+    </center>
+
+</body>
+</html>
